@@ -30,4 +30,36 @@ async function getCurrencyRate(coin) {
     }
 }
 
-module.exports = { getCurrencyRate };
+async function getMultipleCurrencyRates(coins) {
+    const upperCoins = coins.map(coin => coin.toUpperCase());
+
+    const invalids = upperCoins.filter(coin => !POPULAR_COINS.includes(coin));
+    if (invalids.length) {
+        return `❌ Moeda(s) não suportada(s): ${invalids.join(", ")}`;
+    }
+
+    try {
+        const url = `${AWESOME_API_URL}/${upperCoins.join(",")}-BRL`;
+        const response = await axios.get(url);
+        const data = response.data;
+
+        let result = "💱 *Cotações em tempo real:*\n\n";
+        upperCoins.forEach(coin => {
+            const key = `${coin}BRL`;
+            if (data[key]) {
+                const buy = formatCurrency(data[key].bid);
+                const sell = formatCurrency(data[key].ask);
+                result += `🔹 *${coin}-BRL*\nCompra: ${buy}\nVenda: ${sell}\n\n`;
+            } else {
+                result += `⚠️ Não encontrei dados para ${coin}.\n\n`;
+            }
+        });
+
+        return result;
+    } catch (err) {
+        console.error(err);
+        return `❌ Não consegui consultar as moedas: ${upperCoins.join(", ")}.`;
+    }
+}
+
+module.exports = { getCurrencyRate, getMultipleCurrencyRates };

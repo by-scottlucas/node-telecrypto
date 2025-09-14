@@ -74,9 +74,11 @@ yarn dev
 
 O bot ficará disponível e responderá aos comandos no seu Telegram.
 
-## **Comandos Disponíveis**
+
+### **Comandos Disponíveis**
 
 * `/start` — Exibe mensagem de boas-vindas e instruções de uso.
+
 * `/cotacao [moeda]` — Consulta a cotação de uma moeda, aceitando siglas ou nomes parciais.
   Exemplos:
 
@@ -86,6 +88,18 @@ O bot ficará disponível e responderá aos comandos no seu Telegram.
   /cotacao dólar
   /cotacao bitcoin
   ```
+
+* `/cotacao [moedas separadas por vírgula]` — Consulta várias moedas de uma vez.
+  Exemplos:
+
+  ```
+  /cotacao USD,EUR,BTC
+  /cotacao dólar,euro,bitcoin
+  /cotacao usd,ethereum,libra
+  ```
+
+> O bot retorna a cotação de cada moeda listada em sequência, facilitando consultas múltiplas sem sobrecarregar a interface.
+
 
 ## **Tecnologias Utilizadas**
 
